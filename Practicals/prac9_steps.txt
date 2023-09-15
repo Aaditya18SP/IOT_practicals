@@ -1,0 +1,47 @@
+1. Connections
+SDA connects to GPIO8 (Physical Pin 24)
+SCK connects to GPIO11 (Physical Pin 23)
+MOSI connects to GPIO10 (Physical Pin 19)
+MISO connects to GPIO9 (Physical Pin 21)
+GND connects to Breadboard Ground Rail.
+RST connects to GPIO25 (Physical Pin 22)
+3.3v connects to 3v3 (Physical Pin 1)
+
+2.Enable the SPI interface
+--In terminal, sudo raspi-config
+--Upon running the command, you will see with a screen showing various -options that you can configure.
+--On this screen use your ARROW keys to go down and select “5 Interfacing Options” and press ENTER.
+--On the next screen, you will want to use your ARROW keys to select the “P4 SPI” option, once selected press ENTER.
+--You will now need to confirm if you want to enable the SPI Interface. To this, you will want to use your ARROW keys to select “Yes” and then press ENTER once it’s selected.
+--The SPI Interface should now be successfully enabled, and you should now see the text “The SPI interface is enabled” appear on the screen.
+
+3.Reboot raspi
+sudo reboot
+
+4.check whether the SPI interface is enabled 
+-- command : lsmod | grep spi 
+--This command will retrieve the list of enabled kernel modules and grab anything from that list that contains the text “spi“.
+--If you see the text “spi_bcm2835” appear in the command line, then you are now ready to proceed to test that the circuit is working correctly.
+
+5. update the packages
+sudo apt-get update
+sudo apt-get upgrade
+
+6.Install libraries
+sudo apt-get install python3-dev python3-pip
+sudo pip3 install spidev
+sudo pip3 install mfrc522
+
+6. then write a program to write text to card.
+sudo nano Write.py
+--write the code
+--ctrl +x to save , press Y and enter
+sudo python3 Write.py (run the script)
+
+
+7. Then write a program to read the text stored in the card/key.
+sudo nano Read.py
+--write the code
+--ctrl +x to save , press Y and enter
+sudo python3 Read.py (run the script)
+
