@@ -29,11 +29,14 @@ def handle(msg):
     elif command =='off':
        bot.sendMessage(chat_id, off(11))
 
-bot = telepot.Bot('6507618998:AAHuTO-wa9p-cyqJe0ujCve9AZeFVsSqJO8')
+'''bot = telepot.Bot('6507618998:AAHuTO-wa9p-cyqJe0ujCve9AZeFVsSqJO8')
 bot.getMe()
 bot.message_loop(handle)
-print('I am listening...')
+print('I am listening...')'''
 
-    
+       
+bot=telepot.Bot('6339798154:AAF2tzyktbdbDAMXOhSsXZLk2pZ42KB7sFg')
+bot.message_loop(handle)
+print('I am listening...')     
 
 

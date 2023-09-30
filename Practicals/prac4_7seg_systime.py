@@ -5,8 +5,7 @@ import RPi.GPIO as GPIO
 import tm1637
 '''CLK->GPIO23(Pin 16)
 DIO->GOPIO24(PIN 18)'''
-#display=tm1637.TM1637(23,24,tm1637,BRIGHT_TYPICAL)
-display=tm1637.TM1637(23,24,7)
+display=tm1637.TM1637(23,24,tm1637.BRIGHT_TYPICAL)
 display.Clear()
 display.SetBrightnes(1)
 while(True):
