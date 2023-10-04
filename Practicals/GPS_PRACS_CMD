@@ -1,0 +1,128 @@
+STEP 1:
+
+/boot/config.txt file 
+dtparam=spi=on
+dtoverlay=pi3-disable-bt
+core_freq=250
+enable_uart=1
+force_turbo=1
+
+/boot/cmdline.txt 
+
+dwc_otg.lpm_enable=0 console=tty1 root=/dev/mmcblk0p7 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles
+
+STEP 2: terminal output
+DISABLE SERVICES
+sudo systemctl stop serial-getty@ttyAMA0.service
+pi@raspberrypi:~ $ sudo systemctl disable serial-getty@ttyAMA0.service
+pi@raspberrypi:~ $ sudo systemctl stop serial-getty@ttys0.service
+pi@raspberrypi:~ $ sudo systemctl disable serial-getty@ttys0.service
+pi@raspberrypi:~ $ sudo systemctl enable serial-getty@ttys0.service
+Created symlink /etc/systemd/system/getty.target.wants/serial-getty@ttys0.service → /lib/systemd/system/serial-getty@.service.
+
+STEP 3:
+aCTIVATE TTYS0
+pi@raspberrypi:~ $ sudo systemctl enable serial-getty@ttys0.service
+Created symlink /etc/systemd/system/getty.target.wants/serial-getty@ttys0.service → /lib/systemd/system/serial-getty@.service.
+
+
+STEP 4:
+INSTALL MINICOM AND PYNMEA2
+pi@raspberrypi:~ $ sudo apt-get install minicom
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  realpath
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  lrzsz
+The following NEW packages will be installed:
+  lrzsz minicom
+0 upgraded, 2 newly installed, 0 to remove and 6 not upgraded.
+Need to get 330 kB of archives.
+After this operation, 1,333 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Err:1 http://raspbian.raspberrypi.org/raspbian stretch/main armhf lrzsz armhf 0.12.21-8+deb9u1
+  404  Not Found [IP: 93.93.128.193 80]
+Err:2 http://raspbian.raspberrypi.org/raspbian stretch/main armhf minicom armhf 2.7-1.1
+  404  Not Found [IP: 93.93.128.193 80]
+E: Failed to fetch http://raspbian.raspberrypi.org/raspbian/pool/main/l/lrzsz/lrzsz_0.12.21-8+deb9u1_armhf.deb  404  Not Found [IP: 93.93.128.193 80]
+E: Failed to fetch http://raspbian.raspberrypi.org/raspbian/pool/main/m/minicom/minicom_2.7-1.1_armhf.deb  404  Not Found [IP: 93.93.128.193 80]
+E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+pi@raspberrypi:~ $ sudo apt-update
+sudo: apt-update: command not found
+pi@raspberrypi:~ $ sudo apt-get update
+Hit:1 http://archive.raspberrypi.org/debian stretch InRelease
+Ign:2 http://raspbian.raspberrypi.org/raspbian stretch InRelease
+Err:3 http://raspbian.raspberrypi.org/raspbian stretch Release                 
+  404  Not Found [IP: 93.93.128.193 80]
+Reading package lists... Done                                                  
+E: The repository 'http://raspbian.raspberrypi.org/raspbian stretch Release' does no longer have a Release file.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+pi@raspberrypi:~ $ sudo pip install pynmea2
+Collecting pynmea2
+  Downloading https://files.pythonhosted.org/packages/c0/d7/5d0e36d00cd8aa19a6e717bcd1216ca805d86865501dfebdd18667c9edbd/pynmea2-1.19.0.tar.gz
+Building wheels for collected packages: pynmea2
+  Running setup.py bdist_wheel for pynmea2 ... done
+  Stored in directory: /root/.cache/pip/wheels/22/49/2d/a6ae1085fa128fde1a2b6969757b77f891cf558814e579462c
+Successfully built pynmea2
+Installing collected packages: pynmea2
+Successfully installed pynmea2-1.19.0
+pi@raspberrypi:~ $ sudo pip3 install pynmea2
+Collecting pynmea2
+  Downloading https://files.pythonhosted.org/packages/75/24/1f575eb17a8135e54b3c243ff87e2f4d6b2389942836021d0628ed837559/pynmea2-1.19.0-py3-none-any.whl
+Installing collected packages: pynmea2
+
+STEP 5:
+TEST OUTPUT
+Successfully installed pynmea2-1.19.0
+pi@raspberrypi:~ $ sudo cat /dev/ttyAMA0
+HGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+
+$GPGSV,1,1,01,07,,,26*7B
+
+$GPGLL,,,,,,V,N*64
+
+$GPRMC,,V,,,,,,,,,,N*53
+
+$GPVTG,,,,,,,,,N*30
+
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+
+$GPGSV,1,1,00*79
+
+$GPGLL,,,,,,V,N*64
+
+$GPRMC,,V,,,,,,,,,,N*53
+
+$GPVTG,,,,,,,,,N*30
+
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+
+$GPGSV,1,1,00*79
+
+$GPGLL,,,,,,V,N*64
+
+$GPRMC,,V,,,,,,,,,,N*53
+
+$GPVTG,,,,,,,,,N*30
+
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+
+$GPGSV,1,1,00*79
+
+$GPGLL,,,,,,V,N*64
+
+$GPRMC,,V,,,,,,,,,,N*53
+
+$GPVTG,,,,,,,,,N*30
+
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
