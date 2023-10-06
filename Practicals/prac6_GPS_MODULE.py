@@ -12,7 +12,7 @@ while(1):
         print(data)
     except:
         print("loading")
-    
+    -
     if(data[0:6] == '$GPGGA'):
         msg=pynmea2.parse(data)
         print(msg)

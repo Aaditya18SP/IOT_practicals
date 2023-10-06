@@ -1,5 +1,8 @@
 STEP 1:
 
+###################/boot/config.txt file############
+$ sudo nano /boot/config.txt
+
 /boot/config.txt file 
 dtparam=spi=on
 dtoverlay=pi3-disable-bt
@@ -7,28 +10,37 @@ core_freq=250
 enable_uart=1
 force_turbo=1
 
-/boot/cmdline.txt 
+##################/boot/cmdline.txt file################
 
+sudo cp /boot/cmdline.txt /boot/cmdline_backup.txt
+
+sudo nano /boot/cmdline.txt
 dwc_otg.lpm_enable=0 console=tty1 root=/dev/mmcblk0p7 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles
 
-STEP 2: terminal output
-DISABLE SERVICES
-sudo systemctl stop serial-getty@ttyAMA0.service
-pi@raspberrypi:~ $ sudo systemctl disable serial-getty@ttyAMA0.service
-pi@raspberrypi:~ $ sudo systemctl stop serial-getty@ttys0.service
-pi@raspberrypi:~ $ sudo systemctl disable serial-getty@ttys0.service
-pi@raspberrypi:~ $ sudo systemctl enable serial-getty@ttys0.service
+############STEP 2#####################
+##############DISABLE SERVICES#####################
+
+cmd:- $sudo systemctl stop serial-getty@ttyAMA0.service
+cmd:- $ sudo systemctl disable serial-getty@ttyAMA0.service
+cmd:-$ sudo systemctl stop serial-getty@ttys0.service
+cmd:-$ sudo systemctl disable serial-getty@ttys0.service
+
+
+output:
 Created symlink /etc/systemd/system/getty.target.wants/serial-getty@ttys0.service → /lib/systemd/system/serial-getty@.service.
 
-STEP 3:
-aCTIVATE TTYS0
-pi@raspberrypi:~ $ sudo systemctl enable serial-getty@ttys0.service
+#####################################STEP 3:################
+####################################ACTIVATE TTYS0##############
+cmd:-$ sudo systemctl enable serial-getty@ttys0.service
 Created symlink /etc/systemd/system/getty.target.wants/serial-getty@ttys0.service → /lib/systemd/system/serial-getty@.service.
 
 
-STEP 4:
-INSTALL MINICOM AND PYNMEA2
-pi@raspberrypi:~ $ sudo apt-get install minicom
+################################STEP 4:###############
+############################INSTALL MINICOM AND PYNMEA2##############
+
+cmd:- $ sudo apt-get install minicom
+
+output:
 Reading package lists... Done
 Building dependency tree       
 Reading state information... Done
@@ -61,6 +73,8 @@ Reading package lists... Done
 E: The repository 'http://raspbian.raspberrypi.org/raspbian stretch Release' does no longer have a Release file.
 N: Updating from such a repository can't be done securely, and is therefore disabled by default.
 N: See apt-secure(8) manpage for repository creation and user configuration details.
+
+########INSTALL PYNMEA2##########
 pi@raspberrypi:~ $ sudo pip install pynmea2
 Collecting pynmea2
   Downloading https://files.pythonhosted.org/packages/c0/d7/5d0e36d00cd8aa19a6e717bcd1216ca805d86865501dfebdd18667c9edbd/pynmea2-1.19.0.tar.gz
@@ -70,15 +84,12 @@ Building wheels for collected packages: pynmea2
 Successfully built pynmea2
 Installing collected packages: pynmea2
 Successfully installed pynmea2-1.19.0
-pi@raspberrypi:~ $ sudo pip3 install pynmea2
-Collecting pynmea2
-  Downloading https://files.pythonhosted.org/packages/75/24/1f575eb17a8135e54b3c243ff87e2f4d6b2389942836021d0628ed837559/pynmea2-1.19.0-py3-none-any.whl
-Installing collected packages: pynmea2
 
-STEP 5:
-TEST OUTPUT
-Successfully installed pynmea2-1.19.0
-pi@raspberrypi:~ $ sudo cat /dev/ttyAMA0
+
+##############STEP 5:################
+############TEST OUTPUT#############
+
+cmd:- $ sudo cat /dev/ttyAMA0
 HGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
 
 $GPGSV,1,1,01,07,,,26*7B
